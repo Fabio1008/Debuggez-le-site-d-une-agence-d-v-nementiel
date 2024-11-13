@@ -25,6 +25,18 @@ const Slider = () => {
     return null;  // Ajoutez un retour par défaut si byDateDesc n'est pas défini
   };
 
+ // Utilisation d'un useEffect pour détecter l'appui sur la touche espace
+ useEffect(() => {
+  const handleKeyDown = (e) => {
+    if (e.code === "Space") {
+      setIsManual((prevIsManual) => !prevIsManual); // Alterne entre pause et reprise
+    }
+  };
+
+  document.addEventListener("keydown", handleKeyDown);
+  return () => document.removeEventListener("keydown", handleKeyDown);
+}, []);
+
   useEffect(() => {
     const timer = nextCard(); // Démarre la fonction qui change les cartes
     return () => clearTimeout(timer); // Nettoie le timeout quand le composant se démonte
